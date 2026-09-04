@@ -110,6 +110,7 @@
       </style>
    </head>
    <body>
+      <!-- ЭКРАН РЕКЛАМЫ (4 СЕКУНДЫ) -->
       <div class="screen active" id="screen-ad">
          <div class="ad-box">
             <div class="ad-placeholder">Тут может быть ваша реклама</div>
@@ -117,6 +118,7 @@
          </div>
       </div>
 
+      <!-- ЭКРАН ОПЛАТЫ -->
       <div class="screen" id="screen-pay">
          <div class="pay-card">
             <div class="pay-title">Узнать актуальное время</div>
@@ -130,6 +132,7 @@
          </div>
       </div>
 
+      <!-- ЭКРАН РЕЗУЛЬТАТА -->
       <div class="screen" id="screen-result">
          <div class="result-time" id="result-time">--:--:--</div>
       </div>
@@ -151,6 +154,7 @@
             screens[name].classList.add("active");
          }
 
+         // Реклама 4 секунды
          function startAd() {
             let count = 4;
             const countEl = document.getElementById("ad-count");
@@ -166,6 +170,7 @@
             }, 1000);
          }
 
+         // Кнопка оплаты
          document
             .getElementById("pay-btn")
             .addEventListener("click", function () {
@@ -192,9 +197,7 @@
 
                fetch("https://api.lava.top/v1/payment/create", {
                   method: "POST",
-                  headers: {
-                     "Content-Type": "application/json",
-                  },
+                  headers: { "Content-Type": "application/json" },
                   body: JSON.stringify({
                      shop_id: SHOP_ID,
                      order_id: orderId,
