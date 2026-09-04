@@ -125,6 +125,14 @@
             line-height: 1;
             color: #222;
          }
+
+         #screen-result.active {
+            display: flex !important;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+         }
       </style>
    </head>
    <body>
@@ -163,16 +171,7 @@
       </div>
 
       <!-- ЭКРАН РЕЗУЛЬТАТА -->
-      <div
-         class="screen"
-         id="screen-result"
-         style="
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            min-height: 100vh;
-         "
-      >
+      <div class="screen" id="screen-result">
          <div class="result-time" id="result-time">--:--:--</div>
          <div
             style="
