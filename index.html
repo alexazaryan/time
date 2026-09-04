@@ -1,176 +1,259 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TimePremium™</title>
-  <style>
-    * { margin:0; padding:0; box-sizing:border-box; }
-    html,body { height:100%; }
-    body {
-      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
-      background: #f4f3f1;
-      color: #222;
-      min-height:100vh;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-    }
-    .screen { display:none; width:100%; max-width:420px; padding:24px; text-align:center; }
-    .screen.active { display:block; }
-    .ad-box {
-      background:#fbfaf9;
-      border:1px solid #ddd9d3;
-      border-radius:16px;
-      padding:60px 24px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-    }
-    .ad-placeholder { font-size:15px; color:#847e73; margin-bottom:28px; line-height:1.5; }
-    .ad-count { font-size:56px; font-weight:bold; color:#555; font-variant-numeric: tabular-nums; }
-    .pay-card {
-      background:#fbfaf9;
-      border:1px solid #ddd9d3;
-      border-radius:16px;
-      padding:32px 24px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-    }
-    .pay-title { font-size:20px; font-weight:bold; margin-bottom:24px; color:#222; }
-    .price-tag { font-size:48px; font-weight:bold; background: linear-gradient(90deg,#d81b8f,#e8a400); -webkit-background-clip:text; background-clip:text; color:transparent; margin-bottom:24px; }
-    .pay-btn {
-      width:100%;
-      background: linear-gradient(90deg,#d81b8f,#8020c0);
-      color:#fff;
-      border:none;
-      padding:16px;
-      border-radius:10px;
-      font-size:16px;
-      font-weight:bold;
-      cursor:pointer;
-    }
-    .pay-btn:active { transform: scale(0.98); }
-    .processing { display:none; font-size:14px; color:#a0700a; margin-top:16px; }
-    .result-time { font-size:72px; font-weight:bold; font-variant-numeric: tabular-nums; line-height:1; color:#222; }
-  </style>
-</head>
-<body>
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>TimePremium™</title>
+      <style>
+         * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+         }
+         html,
+         body {
+            height: 100%;
+         }
+         body {
+            font-family:
+               system-ui,
+               -apple-system,
+               "Segoe UI",
+               Roboto,
+               Arial,
+               sans-serif;
+            background: #f4f3f1;
+            color: #222;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+         }
+         .screen {
+            display: none;
+            width: 100%;
+            max-width: 420px;
+            padding: 24px;
+            text-align: center;
+         }
+         .screen.active {
+            display: block;
+         }
+         .ad-box {
+            background: #fbfaf9;
+            border: 1px solid #ddd9d3;
+            border-radius: 16px;
+            padding: 60px 24px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+         }
+         .ad-placeholder {
+            font-size: 15px;
+            color: #847e73;
+            margin-bottom: 28px;
+            line-height: 1.5;
+         }
+         .ad-count {
+            font-size: 56px;
+            font-weight: bold;
+            color: #555;
+            font-variant-numeric: tabular-nums;
+         }
+         .pay-card {
+            background: #fbfaf9;
+            border: 1px solid #ddd9d3;
+            border-radius: 16px;
+            padding: 32px 24px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+         }
+         .pay-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 24px;
+            color: #222;
+         }
+         .price-tag {
+            font-size: 48px;
+            font-weight: bold;
+            background: linear-gradient(90deg, #d81b8f, #e8a400);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 24px;
+         }
+         .pay-btn {
+            width: 100%;
+            background: linear-gradient(90deg, #d81b8f, #8020c0);
+            color: #fff;
+            border: none;
+            padding: 16px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+         }
+         .pay-btn:active {
+            transform: scale(0.98);
+         }
+         .processing {
+            display: none;
+            font-size: 14px;
+            color: #a0700a;
+            margin-top: 16px;
+         }
+         .result-time {
+            font-size: 72px;
+            font-weight: bold;
+            font-variant-numeric: tabular-nums;
+            line-height: 1;
+            color: #222;
+         }
+      </style>
+   </head>
+   <body>
+      <div class="screen active" id="screen-ad">
+         <div class="ad-box">
+            <div class="ad-placeholder">Тут может быть ваша реклама</div>
+            <div class="ad-count" id="ad-count">4</div>
+         </div>
+      </div>
 
-  <div class="screen active" id="screen-ad">
-    <div class="ad-box">
-      <div class="ad-placeholder">Тут может быть ваша реклама</div>
-      <div class="ad-count" id="ad-count">4</div>
-    </div>
-  </div>
+      <div class="screen" id="screen-pay">
+         <div class="pay-card">
+            <div class="pay-title">Узнать актуальное время</div>
+            <div class="price-tag">$1.00</div>
+            <button class="pay-btn" id="pay-btn">
+               Оплатить и узнать время
+            </button>
+            <div class="processing" id="processing">
+               Перенаправление на оплату...
+            </div>
+         </div>
+      </div>
 
-  <div class="screen" id="screen-pay">
-    <div class="pay-card">
-      <div class="pay-title">Узнать актуальное время</div>
-      <div class="price-tag">$1.00</div>
-      <button class="pay-btn" id="pay-btn">Оплатить и узнать время</button>
-      <div class="processing" id="processing">Перенаправление на оплату...</div>
-    </div>
-  </div>
+      <div class="screen" id="screen-result">
+         <div class="result-time" id="result-time">--:--:--</div>
+      </div>
 
-  <div class="screen" id="screen-result">
-    <div class="result-time" id="result-time">--:--:--</div>
-  </div>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+      <script>
+         const SHOP_ID = "1620281206";
+         const SECRET_KEY =
+            "XMx8yf2dRT5WaDmlauLFkMf2xjkJZBA8q1nlUlmRcYOkJjNuR7RU2qe0FtDrmY9t";
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
-  <script>
-    const SHOP_ID = '1620281206';
-    const SECRET_KEY = 'XMx8yf2dRT5WaDmlauLFkMf2xjkJZBA8q1nlUlmRcYOkJjNuR7RU2qe0FtDrmY9t';
+         const screens = {
+            ad: document.getElementById("screen-ad"),
+            pay: document.getElementById("screen-pay"),
+            result: document.getElementById("screen-result"),
+         };
 
-    const screens = {
-      ad: document.getElementById('screen-ad'),
-      pay: document.getElementById('screen-pay'),
-      result: document.getElementById('screen-result')
-    };
+         function showScreen(name) {
+            Object.values(screens).forEach((s) => s.classList.remove("active"));
+            screens[name].classList.add("active");
+         }
 
-    function showScreen(name) {
-      Object.values(screens).forEach(s => s.classList.remove('active'));
-      screens[name].classList.add('active');
-    }
+         function startAd() {
+            let count = 4;
+            const countEl = document.getElementById("ad-count");
+            countEl.textContent = count;
+            const timer = setInterval(() => {
+               count--;
+               if (count <= 0) {
+                  clearInterval(timer);
+                  showScreen("pay");
+               } else {
+                  countEl.textContent = count;
+               }
+            }, 1000);
+         }
 
-    function startAd() {
-      let count = 4;
-      const countEl = document.getElementById('ad-count');
-      countEl.textContent = count;
-      const timer = setInterval(() => {
-        count--;
-        if (count <= 0) {
-          clearInterval(timer);
-          showScreen('pay');
-        } else {
-          countEl.textContent = count;
-        }
-      }, 1000);
-    }
+         document
+            .getElementById("pay-btn")
+            .addEventListener("click", function () {
+               const btn = this;
+               const proc = document.getElementById("processing");
+               btn.disabled = true;
+               proc.style.display = "block";
 
-    document.getElementById('pay-btn').addEventListener('click', function() {
-      const btn = this;
-      const proc = document.getElementById('processing');
-      btn.disabled = true;
-      proc.style.display = 'block';
+               const orderId = Date.now().toString();
+               const sum = "1.00";
+               const currency = "USD";
 
-      const orderId = Date.now().toString();
-      const sum = '1.00';
-      const currency = 'USD';
+               // Правильная подпись по документации Lava
+               const sign = CryptoJS.SHA256(
+                  SHOP_ID +
+                     ":" +
+                     orderId +
+                     ":" +
+                     sum +
+                     ":" +
+                     currency +
+                     ":" +
+                     SECRET_KEY,
+               ).toString();
 
-      // Правильная подпись по документации Lava
-      const sign = CryptoJS.SHA256(
-        SHOP_ID + ':' + orderId + ':' + sum + ':' + currency + ':' + SECRET_KEY
-      ).toString();
+               fetch("https://api.lava.top/v1/payment/create", {
+                  method: "POST",
+                  headers: {
+                     "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                     shop_id: SHOP_ID,
+                     order_id: orderId,
+                     sum: sum,
+                     currency: currency,
+                     success_url: window.location.href + "?success",
+                     failure_url: window.location.href + "?fail",
+                     signature: sign,
+                  }),
+               })
+                  .then((res) => res.json())
+                  .then((data) => {
+                     if (data.success) {
+                        window.location.href = data.data.url;
+                     } else {
+                        alert("Ошибка: " + data.message);
+                        btn.disabled = false;
+                        proc.style.display = "none";
+                     }
+                  })
+                  .catch((err) => {
+                     alert("Ошибка подключения к платежной системе");
+                     btn.disabled = false;
+                     proc.style.display = "none";
+                  });
+            });
 
-      fetch('https://api.lava.top/v1/payment/create', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          shop_id: SHOP_ID,
-          order_id: orderId,
-          sum: sum,
-          currency: currency,
-          success_url: window.location.href + '?success',
-          failure_url: window.location.href + '?fail',
-          signature: sign
-        })
-      })
-      .then(res => res.json())
-      .then(data => {
-        if (data.success) {
-          window.location.href = data.data.url;
-        } else {
-          alert('Ошибка: ' + data.message);
-          btn.disabled = false;
-          proc.style.display = 'none';
-        }
-      })
-      .catch(err => {
-        alert('Ошибка подключения к платежной системе');
-        btn.disabled = false;
-        proc.style.display = 'none';
-      });
-    });
+         function updateTime() {
+            const now = new Date();
+            document.getElementById("result-time").textContent =
+               now.toLocaleTimeString("ru-RU");
+         }
 
-    function updateTime() {
-      const now = new Date();
-      document.getElementById('result-time').textContent = now.toLocaleTimeString('ru-RU');
-    }
+         if (window.location.search.includes("success")) {
+            showScreen("result");
+            updateTime();
+            window.history.replaceState(
+               {},
+               document.title,
+               window.location.pathname,
+            );
+         }
 
-    if (window.location.search.includes('success')) {
-      showScreen('result');
-      updateTime();
-      window.history.replaceState({}, document.title, window.location.pathname);
-    }
+         setInterval(() => {
+            if (screens.result.classList.contains("active")) {
+               updateTime();
+            }
+         }, 1000);
 
-    setInterval(() => {
-      if (screens.result.classList.contains('active')) {
-        updateTime();
-      }
-    }, 1000);
-
-    startAd();
-  </script>
-
-</body>
+         startAd();
+      </script>
+      <!-- Оферта (добавить в index.html перед </body>) -->
+      <div style="display: none">
+         <p>Пользовательское соглашение</p>
+         <p>1. Услуга: предоставление текущего времени.</p>
+         <p>2. Стоимость: $1.00.</p>
+         <p>3. Возврат средств: не предусмотрен.</p>
+         <p>4. Контакты: @albertovich_alex (Telegram).</p>
+      </div>
+   </body>
 </html>
