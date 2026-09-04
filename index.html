@@ -126,6 +126,7 @@
             color: #222;
          }
 
+         /*  */
          #screen-result.active {
             display: flex !important;
             flex-direction: column;
@@ -133,6 +134,19 @@
             align-items: center;
             min-height: 100vh;
             text-align: center;
+            padding: 24px;
+         }
+
+         #screen-result .result-time {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+         }
+
+         #screen-result .counter-block {
+            margin-top: auto;
+            padding-bottom: 30px;
          }
       </style>
    </head>
@@ -175,13 +189,8 @@
       <div class="screen" id="screen-result">
          <div class="result-time" id="result-time">--:--:--</div>
          <div
-            style="
-               margin-top: 20px;
-               padding-bottom: 40px;
-               font-size: 18px;
-               color: #d81b8f;
-               font-weight: 600;
-            "
+            class="counter-block"
+            style="font-size: 18px; color: #d81b8f; font-weight: 600"
          >
             👥 Нас уже: <span id="counter">47</span> человек
          </div>
