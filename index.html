@@ -178,7 +178,6 @@
                const sum = "1.00";
                const currency = "USD";
 
-               // Правильная подпись по документации Lava
                const sign = CryptoJS.SHA256(
                   SHOP_ID +
                      ":" +
@@ -216,7 +215,7 @@
                         proc.style.display = "none";
                      }
                   })
-                  .catch((err) => {
+                  .catch(() => {
                      alert("Ошибка подключения к платежной системе");
                      btn.disabled = false;
                      proc.style.display = "none";
@@ -247,7 +246,7 @@
 
          startAd();
       </script>
-      <!-- Оферта (добавить в index.html перед </body>) -->
+
       <div style="display: none">
          <p>Пользовательское соглашение</p>
          <p>1. Услуга: предоставление текущего времени.</p>
