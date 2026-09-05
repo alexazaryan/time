@@ -222,11 +222,10 @@
          </div>
       </div>
 
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
       <script>
-         const SHOP_ID = "1620281206";
-         const SECRET_KEY =
-            "XMx8yf2dRT5WaDmlauLFkMf2xjkJZBA8q1nlUlmRcYOkJjNuR7RU2qe0FtDrmY9t";
+         const API_KEY =
+            "i4RmXQBnNNkd3qfh8gAMoSrVIEhsTCbQpyP3yhcGqdlup3VIjIhykj9HLeqKomPT";
+         const OFFER_ID = "f3758089-2777-4559-a316-73a48e27996d";
 
          const screens = {
             ad: document.getElementById("screen-ad"),
@@ -261,44 +260,32 @@
             .addEventListener("click", function () {
                const btn = this;
                const proc = document.getElementById("processing");
+               const email = "guest" + Date.now() + "@mytimenow.pro";
+
                btn.disabled = true;
                proc.style.display = "block";
 
-               const orderId = Date.now().toString();
-               const sum = "1.00";
-               const currency = "USD";
-
-               const sign = CryptoJS.SHA256(
-                  SHOP_ID +
-                     ":" +
-                     orderId +
-                     ":" +
-                     sum +
-                     ":" +
-                     currency +
-                     ":" +
-                     SECRET_KEY,
-               ).toString();
-
-               fetch("https://api.lava.top/v1/payment/create", {
+               fetch("https://gate.lava.top/api/v3/invoice", {
                   method: "POST",
-                  headers: { "Content-Type": "application/json" },
+                  headers: {
+                     Accept: "application/json",
+                     "X-Api-Key": API_KEY,
+                     "Content-Type": "application/json",
+                  },
                   body: JSON.stringify({
-                     shop_id: SHOP_ID,
-                     order_id: orderId,
-                     sum: sum,
-                     currency: currency,
-                     success_url: window.location.href + "?success",
-                     failure_url: window.location.href + "?fail",
-                     signature: sign,
+                     email: email,
+                     offerId: OFFER_ID,
+                     currency: "RUB",
+                     successful_return_url:
+                        window.location.origin + "/?success",
                   }),
                })
                   .then((res) => res.json())
                   .then((data) => {
-                     if (data.success) {
-                        window.location.href = data.data.url;
+                     if (data.paymentUrl) {
+                        window.location.href = data.paymentUrl;
                      } else {
-                        alert("Ошибка: " + data.message);
+                        alert("Ошибка создания платежа");
                         btn.disabled = false;
                         proc.style.display = "none";
                      }
