@@ -98,10 +98,19 @@
             color: transparent;
             margin-bottom: 24px;
          }
-         .pay-btn-wrap {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 8px;
+         .pay-btn {
+            width: 100%;
+            background: linear-gradient(90deg, #d81b8f, #8020c0);
+            color: #fff;
+            border: none;
+            padding: 16px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+         }
+         .pay-btn:active {
+            transform: scale(0.98);
          }
          .processing {
             display: none;
@@ -180,26 +189,24 @@
             </div>
             <div class="price-tag">$1.00</div>
 
-            <!-- Готовая кнопка оплаты от Lava (Web-Widget) -->
-            <div class="pay-btn-wrap">
-               <iframe
-                  title="lava.top"
-                  style="border: none"
-                  width="250"
-                  height="80"
-                  src="https://widget.lava.top/68d8ee56-a84d-4bc0-8a64-f3950426f6d0"
-               ></iframe>
-            </div>
+            <!-- Ссылка на оплату Lava -->
+            <a
+               href="https://app.lava.top/products/ffd21f79-668b-46cf-807f-fdfb00b64592"
+               class="pay-btn"
+               style="display: block; text-decoration: none; text-align: center"
+            >
+               Оплатить и узнать время
+            </a>
          </div>
 
          <!-- ОФЕРТА СНИЗУ ЭКРАНА, ТОЛЬКО НА ЭКРАНЕ ОПЛАТЫ -->
          <div class="pay-footer">
-            <p style="margin: 0">
-               Условия: после оплаты вы увидите время. Стоимость: $1.00.
-            </p>
             <div style="font-size: 8px; color: #ddd; margin-top: 10px">
                Контакты: alexnuts414@gmail.com
             </div>
+            <p style="margin: 0">
+               Условия: после оплаты вы увидите время. Стоимость: $1.00.
+            </p>
          </div>
       </div>
 
@@ -273,6 +280,7 @@
             startAd();
          }
 
+         //
          // удалить этот блок
          // if (!isSuccess) {
          //    showScreen("pay");
