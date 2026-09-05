@@ -333,7 +333,9 @@
             }
          }, 1000);
 
-         startAd();
+         if (!window.location.search.includes("success")) {
+            startAd();
+         }
       </script>
    </body>
 </html>
