@@ -218,7 +218,7 @@
             style="font-size: 18px; color: #d81b8f; font-weight: 600"
          >
             <!-- Нас уже -->
-            <!-- 👥 Нас уже: <span id="counter">47</span> человек -->
+            👥 Нас уже: <span id="counter">47</span> человек
          </div>
       </div>
 
@@ -335,8 +335,14 @@
             }
          }, 1000);
 
+         // это оставить блок с релкмой
+         // if (!isSuccess) {
+         //    startAd();
+         // }
+
+         // удалить этот блок
          if (!isSuccess) {
-            startAd();
+            showScreen("pay");
          }
       </script>
    </body>
