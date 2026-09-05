@@ -147,6 +147,19 @@
             margin-top: auto;
             padding-bottom: 30px;
          }
+
+         .pay-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            font-size: 12px;
+            color: #999;
+            text-align: center;
+            padding: 15px;
+            background: #f4f3f1;
+            border-top: 1px solid #eee;
+         }
       </style>
    </head>
    <body>
@@ -181,31 +194,15 @@
             <div class="processing" id="processing">
                Перенаправление на оплату...
             </div>
+         </div>
 
-            <!-- ОФЕРТА ТОЛЬКО ЗДЕСЬ -->
-            <div
-               style="
-                  font-size: 12px;
-                  color: #999;
-                  margin-top: 20px;
-                  text-align: center;
-                  border-top: 1px solid #eee;
-                  padding-top: 15px;
-               "
-            >
-               <p style="margin: 0">
-                  Условия: после оплаты вы увидите время. Стоимость: $1.00.
-               </p>
-               <div
-                  style="
-                     font-size: 8px;
-                     color: #ddd;
-                     text-align: center;
-                     margin-top: 10px;
-                  "
-               >
-                  Контакты: alexnuts414@gmail.com
-               </div>
+         <!-- ОФЕРТА СНИЗУ ЭКРАНА, ТОЛЬКО НА ЭКРАНЕ ОПЛАТЫ -->
+         <div class="pay-footer">
+            <p style="margin: 0">
+               Условия: после оплаты вы увидите время. Стоимость: $1.00.
+            </p>
+            <div style="font-size: 8px; color: #ddd; margin-top: 10px">
+               Контакты: alexnuts414@gmail.com
             </div>
          </div>
       </div>
@@ -223,10 +220,6 @@
       </div>
 
       <script>
-         const API_KEY =
-            "i4RmXQBnNNkd3qfh8gAMoSrVIEhsTCbQpyP3yhcGqdlup3VIjIhykj9HLeqKomPT";
-         const OFFER_ID = "f3758089-2777-4559-a316-73a48e27996d";
-
          const screens = {
             ad: document.getElementById("screen-ad"),
             pay: document.getElementById("screen-pay"),
@@ -254,31 +247,18 @@
             }, 1000);
          }
 
-         // Кнопка оплаты
+         // Кнопка оплаты — запрос идёт через свою серверную функцию,
+         // ключ API нигде в этом файле не хранится
          document
             .getElementById("pay-btn")
             .addEventListener("click", function () {
                const btn = this;
                const proc = document.getElementById("processing");
-               const email = "guest" + Date.now() + "@mytimenow.pro";
-
                btn.disabled = true;
                proc.style.display = "block";
 
-               fetch("https://gate.lava.top/api/v3/invoice", {
+               fetch("/api/create-payment", {
                   method: "POST",
-                  headers: {
-                     Accept: "application/json",
-                     "X-Api-Key": API_KEY,
-                     "Content-Type": "application/json",
-                  },
-                  body: JSON.stringify({
-                     email: email,
-                     offerId: OFFER_ID,
-                     currency: "RUB",
-                     successful_return_url:
-                        window.location.origin + "/?success",
-                  }),
                })
                   .then((res) => res.json())
                   .then((data) => {
