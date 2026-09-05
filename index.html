@@ -125,56 +125,51 @@
             line-height: 1;
             color: #222;
          }
-         /* код часы сатрт  */
-         #screen-result {
-            background: linear-gradient(
-               -45deg,
-               #d81b8f,
-               #8020c0,
-               #e8a400,
-               #00b4d8
-            );
-            background-size: 400% 400%;
-            animation: gradientShift 8s ease infinite;
-         }
 
-         @keyframes gradientShift {
-            0% {
-               background-position: 0% 50%;
-            }
-            50% {
-               background-position: 100% 50%;
-            }
-            100% {
-               background-position: 0% 50%;
-            }
+         /* код часы старт */
+         #screen-result {
+            background: #ffffff;
          }
 
          #screen-result .result-time {
-            color: #fff;
-            text-shadow:
-               0 0 20px rgba(255, 255, 255, 0.6),
-               0 0 40px rgba(255, 255, 255, 0.3);
-            animation: pulseGlow 2s ease-in-out infinite;
+            background: linear-gradient(
+               90deg,
+               #d81b8f,
+               #8020c0,
+               #e8a400,
+               #00b4d8,
+               #d81b8f
+            );
+            background-size: 300% 100%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation:
+               colorFlow 4s linear infinite,
+               scalePulse 1.5s ease-in-out infinite;
          }
 
-         @keyframes pulseGlow {
+         @keyframes colorFlow {
+            0% {
+               background-position: 0% 50%;
+            }
+            100% {
+               background-position: 300% 50%;
+            }
+         }
+
+         @keyframes scalePulse {
             0%,
             100% {
-               text-shadow:
-                  0 0 20px rgba(255, 255, 255, 0.6),
-                  0 0 40px rgba(255, 255, 255, 0.3);
+               transform: scale(1);
             }
             50% {
-               text-shadow:
-                  0 0 30px rgba(255, 255, 255, 0.9),
-                  0 0 60px rgba(255, 255, 255, 0.5);
+               transform: scale(1.04);
             }
          }
 
          #screen-result .counter-block {
-            color: #fff !important;
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            color: #222 !important;
          }
          /* часы конец */
          #screen-result.active {
