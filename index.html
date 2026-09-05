@@ -125,8 +125,58 @@
             line-height: 1;
             color: #222;
          }
+         /* код часы сатрт  */
+         #screen-result {
+            background: linear-gradient(
+               -45deg,
+               #d81b8f,
+               #8020c0,
+               #e8a400,
+               #00b4d8
+            );
+            background-size: 400% 400%;
+            animation: gradientShift 8s ease infinite;
+         }
 
-         /*  */
+         @keyframes gradientShift {
+            0% {
+               background-position: 0% 50%;
+            }
+            50% {
+               background-position: 100% 50%;
+            }
+            100% {
+               background-position: 0% 50%;
+            }
+         }
+
+         #screen-result .result-time {
+            color: #fff;
+            text-shadow:
+               0 0 20px rgba(255, 255, 255, 0.6),
+               0 0 40px rgba(255, 255, 255, 0.3);
+            animation: pulseGlow 2s ease-in-out infinite;
+         }
+
+         @keyframes pulseGlow {
+            0%,
+            100% {
+               text-shadow:
+                  0 0 20px rgba(255, 255, 255, 0.6),
+                  0 0 40px rgba(255, 255, 255, 0.3);
+            }
+            50% {
+               text-shadow:
+                  0 0 30px rgba(255, 255, 255, 0.9),
+                  0 0 60px rgba(255, 255, 255, 0.5);
+            }
+         }
+
+         #screen-result .counter-block {
+            color: #fff !important;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+         }
+         /* часы конец */
          #screen-result.active {
             display: flex !important;
             flex-direction: column;
@@ -219,7 +269,7 @@
             style="font-size: 18px; color: #d81b8f; font-weight: 600"
          >
             <!-- Нас уже -->
-            👥 Нас уже: <span id="counter">47</span> человек
+            <!-- 👥 Нас уже: <span id="counter">47</span> человек -->
          </div>
       </div>
 
