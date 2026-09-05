@@ -126,52 +126,6 @@
             color: #222;
          }
 
-         /* код часы старт */
-         #screen-result {
-            background: #ffffff;
-         }
-
-         #screen-result .result-time {
-            background: linear-gradient(
-               90deg,
-               #d81b8f,
-               #8020c0,
-               #e8a400,
-               #00b4d8,
-               #d81b8f
-            );
-            background-size: 300% 100%;
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            animation:
-               colorFlow 4s linear infinite,
-               scalePulse 1.5s ease-in-out infinite;
-         }
-
-         @keyframes colorFlow {
-            0% {
-               background-position: 0% 50%;
-            }
-            100% {
-               background-position: 300% 50%;
-            }
-         }
-
-         @keyframes scalePulse {
-            0%,
-            100% {
-               transform: scale(1);
-            }
-            50% {
-               transform: scale(1.04);
-            }
-         }
-
-         #screen-result .counter-block {
-            color: #222 !important;
-         }
-         /* часы конец */
          #screen-result.active {
             display: flex !important;
             flex-direction: column;
