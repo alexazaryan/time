@@ -98,19 +98,10 @@
             color: transparent;
             margin-bottom: 24px;
          }
-         .pay-btn {
-            width: 100%;
-            background: linear-gradient(90deg, #d81b8f, #8020c0);
-            color: #fff;
-            border: none;
-            padding: 16px;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-         }
-         .pay-btn:active {
-            transform: scale(0.98);
+         .pay-btn-wrap {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 8px;
          }
          .processing {
             display: none;
@@ -188,11 +179,16 @@
                👥 Узнай, сколько людей уже знают время
             </div>
             <div class="price-tag">$1.00</div>
-            <button class="pay-btn" id="pay-btn">
-               Оплатить и узнать время
-            </button>
-            <div class="processing" id="processing">
-               Перенаправление на оплату...
+
+            <!-- Готовая кнопка оплаты от Lava (Web-Widget) -->
+            <div class="pay-btn-wrap">
+               <iframe
+                  title="lava.top"
+                  style="border: none"
+                  width="250"
+                  height="80"
+                  src="https://widget.lava.top/68d8ee56-a84d-4bc0-8a64-f3950426f6d0"
+               ></iframe>
             </div>
          </div>
 
@@ -247,36 +243,6 @@
             }, 1000);
          }
 
-         // Кнопка оплаты — запрос идёт через свою серверную функцию,
-         // ключ API нигде в этом файле не хранится
-         document
-            .getElementById("pay-btn")
-            .addEventListener("click", function () {
-               const btn = this;
-               const proc = document.getElementById("processing");
-               btn.disabled = true;
-               proc.style.display = "block";
-
-               fetch("/api/create-payment", {
-                  method: "POST",
-               })
-                  .then((res) => res.json())
-                  .then((data) => {
-                     if (data.paymentUrl) {
-                        window.location.href = data.paymentUrl;
-                     } else {
-                        alert("Ошибка создания платежа");
-                        btn.disabled = false;
-                        proc.style.display = "none";
-                     }
-                  })
-                  .catch(() => {
-                     alert("Ошибка подключения к платежной системе");
-                     btn.disabled = false;
-                     proc.style.display = "none";
-                  });
-            });
-
          function updateTime() {
             const now = new Date();
             document.getElementById("result-time").textContent =
@@ -303,14 +269,14 @@
          }, 1000);
 
          // это оставить блок с релкмой
-         // if (!isSuccess) {
-         //    startAd();
-         // }
+         if (!isSuccess) {
+            startAd();
+         }
 
          // удалить этот блок
-         if (!isSuccess) {
-            showScreen("pay");
-         }
+         // if (!isSuccess) {
+         //    showScreen("pay");
+         // }
       </script>
    </body>
 </html>
