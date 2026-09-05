@@ -317,7 +317,10 @@
                now.toLocaleTimeString("ru-RU");
          }
 
-         if (window.location.search.includes("success")) {
+         // Фиксируем флаг ДО очистки URL — это и есть исправление
+         const isSuccess = window.location.search.includes("success");
+
+         if (isSuccess) {
             showScreen("result");
             updateTime();
             window.history.replaceState(
@@ -333,7 +336,7 @@
             }
          }, 1000);
 
-         if (!window.location.search.includes("success")) {
+         if (!isSuccess) {
             startAd();
          }
       </script>
