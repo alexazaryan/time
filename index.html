@@ -13,7 +13,7 @@
       <title>mytimenow.pro</title>
 
       <meta property="og:title" content="mytimenow.pro" />
-      <meta property="og:description" content="Узнай точное время за $1" />
+      <meta property="og:description" content="Узнай время за $1" />
       <meta property="og:image" content="https://mytimenow.pro/favicon.png" />
       <meta property="og:url" content="https://mytimenow.pro/" />
       <meta property="og:type" content="website" />
@@ -48,14 +48,27 @@
             </div>
             <div class="price-tag">$1.00</div>
 
-            <!-- Ссылка на оплату Lava -->
-            <a
+            <!-- Виджет оплаты Lava (One-click / Apple Pay) -->
+            <iframe
+               title="lava.top"
+               style="
+                  border: none;
+                  display: block;
+                  width: 100%;
+                  max-width: 324px;
+                  margin: 0 auto;
+               "
+               height="52"
+               src="https://widget.lava.top/1d972fcf-85ac-4970-8111-48ace07e230c"
+            ></iframe>
+
+            <!-- старый с переходом -->
+            <!-- <a
                href="https://app.lava.top/products/466bc0bd-9f58-45b7-8d76-e0318e279566"
                class="pay-btn"
                style="display: block; text-decoration: none; text-align: center"
-            >
-               Оплатить
-            </a>
+               >Оплатить</a
+            > -->
          </div>
 
          <!-- ОФЕРТА СНИЗУ ЭКРАНА, ТОЛЬКО НА ЭКРАНЕ ОПЛАТЫ -->
