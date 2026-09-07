@@ -13,7 +13,7 @@ export default async function handler(req, res) {
          },
          body: JSON.stringify({
             email: "guest" + Date.now() + "@mytimenow.pro",
-            offerId: "f3758089-2777-4559-a316-73a48e27996d",
+            offerId: "466bc0bd-9f58-45b7-8d76-e0318e279566",
             currency: "RUB",
             successful_return_url: "https://mytimenow.pro/?success",
          }),
