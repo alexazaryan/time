@@ -62,13 +62,10 @@
                src="https://widget.lava.top/1d972fcf-85ac-4970-8111-48ace07e230c"
             ></iframe> -->
 
-            <!-- старый с переходом -->
-            <a
-               href="https://app.lava.top/products/466bc0bd-9f58-45b7-8d76-e0318e279566"
-               class="pay-btn"
-               style="display: block; text-decoration: none; text-align: center"
-               >Оплатить</a
-            >
+            <!-- Кнопка оплаты — ссылка подбирается по стране посетителя -->
+            <div id="pay-buttons">
+               <div class="pay-btn" style="opacity: 0.6">Загрузка...</div>
+            </div>
          </div>
 
          <!-- ОФЕРТА СНИЗУ ЭКРАНА, ТОЛЬКО НА ЭКРАНЕ ОПЛАТЫ -->
@@ -95,5 +92,33 @@
       </div>
 
       <script src="script.js"></script>
+      <script>
+         (function () {
+            const LINK_RU =
+               "https://app.lava.top/products/466bc0bd-9f58-45b7-8d76-e0318e279566"; // рубли, 85₽
+            const LINK_INTL = "https://send.monobank.ua/jar/8qiScDMmpB"; // банка Monobank, $1
+
+            fetch("https://ipapi.co/json/")
+               .then((res) => res.json())
+               .then((data) => {
+                  const isRussia = data.country_code === "RU";
+                  const link = isRussia ? LINK_RU : LINK_INTL;
+                  const label = isRussia ? "Оплатить 85₽" : "Pay $1";
+
+                  document.getElementById("pay-buttons").innerHTML = `
+                     <a href="${link}" class="pay-btn" style="display:block;text-decoration:none;text-align:center;">
+                        ${label}
+                     </a>
+                  `;
+               })
+               .catch(() => {
+                  document.getElementById("pay-buttons").innerHTML = `
+                     <a href="${LINK_INTL}" class="pay-btn" style="display:block;text-decoration:none;text-align:center;">
+                        Pay $1
+                     </a>
+                  `;
+               });
+         })();
+      </script>
    </body>
 </html>
