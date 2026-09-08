@@ -112,9 +112,11 @@
                   `;
                })
                .catch(() => {
+                  // если геолокация не сработала (например заблокирована в РФ) —
+                  // по умолчанию показываем Lava, т.к. это основная аудитория
                   document.getElementById("pay-buttons").innerHTML = `
-                     <a href="${LINK_INTL}" class="pay-btn" style="display:block;text-decoration:none;text-align:center;">
-                        Pay $1
+                     <a href="${LINK_RU}" class="pay-btn" style="display:block;text-decoration:none;text-align:center;">
+                        Оплатить 85₽
                      </a>
                   `;
                });
