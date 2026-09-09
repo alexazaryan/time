@@ -93,13 +93,6 @@ body {
    color: #a0700a;
    margin-top: 16px;
 }
-.result-time {
-   font-size: 72px;
-   font-weight: bold;
-   font-variant-numeric: tabular-nums;
-   line-height: 1;
-   color: #222;
-}
 
 #screen-result.active {
    display: flex !important;
@@ -109,18 +102,55 @@ body {
    min-height: 100vh;
    text-align: center;
    padding: 24px;
+   background: #000;
 }
 
-#screen-result .result-time {
+.clock-wrap {
    flex: 1;
    display: flex;
    align-items: center;
    justify-content: center;
+   width: 100%;
+}
+
+.clock-digits {
+   display: flex;
+   align-items: center;
+   gap: clamp(6px, 1.6vw, 14px);
+   flex-wrap: nowrap;
+}
+
+.clock-digits svg {
+   width: clamp(28px, 8vw, 56px);
+   height: auto;
+   overflow: visible;
+}
+
+.clock-sep {
+   width: clamp(6px, 1.4vw, 10px);
+   height: clamp(6px, 1.4vw, 10px);
+   border-radius: 50%;
+   background: #ff2d2d;
+   box-shadow: 0 0 10px rgba(255, 45, 45, 0.9);
+   flex-shrink: 0;
+}
+
+.clock-sep-col {
+   display: flex;
+   flex-direction: column;
+   gap: clamp(10px, 3vw, 20px);
+   align-self: center;
+}
+
+.seg {
+   fill: #ff2d2d;
+   transition: opacity 0.5s ease;
 }
 
 #screen-result .counter-block {
    margin-top: auto;
    padding-bottom: 30px;
+   color: #ff9ec8 !important;
 }
 
 .pay-footer {
