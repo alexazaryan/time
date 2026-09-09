@@ -48,23 +48,19 @@
             </div>
             <div class="price-tag">$1.00</div>
 
-            <!-- Виджет оплаты Lava (One-click / Apple Pay) -->
-            <!-- <iframe
-               title="lava.top"
-               style="
-                  border: none;
-                  display: block;
-                  width: 100%;
-                  max-width: 324px;
-                  margin: 0 auto;
-               "
-               height="52"
-               src="https://widget.lava.top/1d972fcf-85ac-4970-8111-48ace07e230c"
-            ></iframe> -->
-
-            <!-- Кнопка оплаты — ссылка подбирается по стране посетителя -->
+            <!-- Кнопка оплаты — только Lava -->
             <div id="pay-buttons">
-               <div class="pay-btn" style="opacity: 0.6">Загрузка...</div>
+               <a
+                  href="https://app.lava.top/products/466bc0bd-9f58-45b7-8d76-e0318e279566"
+                  class="pay-btn"
+                  style="
+                     display: block;
+                     text-decoration: none;
+                     text-align: center;
+                  "
+               >
+                  Оплатить 85₽
+               </a>
             </div>
          </div>
 
@@ -86,41 +82,10 @@
             class="counter-block"
             style="font-size: 18px; color: #d81b8f; font-weight: 600"
          >
-            <!-- Нас уже -->
             👥 Нас уже: <span id="counter">47</span> человек
          </div>
       </div>
 
       <script src="script.js"></script>
-      <script>
-         (function () {
-            const LINK_RU =
-               "https://app.lava.top/products/466bc0bd-9f58-45b7-8d76-e0318e279566"; // рубли, 85₽
-            const LINK_INTL = "https://send.monobank.ua/jar/8qiScDMmpB"; // банка Monobank, $1
-
-            fetch("https://ipapi.co/json/")
-               .then((res) => res.json())
-               .then((data) => {
-                  const isRussia = data.country_code === "RU";
-                  const link = isRussia ? LINK_RU : LINK_INTL;
-                  const label = isRussia ? "Оплатить 85₽" : "Pay $1";
-
-                  document.getElementById("pay-buttons").innerHTML = `
-                     <a href="${link}" class="pay-btn" style="display:block;text-decoration:none;text-align:center;">
-                        ${label}
-                     </a>
-                  `;
-               })
-               .catch(() => {
-                  // если геолокация не сработала (например заблокирована в РФ) —
-                  // по умолчанию показываем Lava, т.к. это основная аудитория
-                  document.getElementById("pay-buttons").innerHTML = `
-                     <a href="${LINK_RU}" class="pay-btn" style="display:block;text-decoration:none;text-align:center;">
-                        Оплатить 85₽
-                     </a>
-                  `;
-               });
-         })();
-      </script>
    </body>
 </html>
