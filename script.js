@@ -202,6 +202,8 @@ setInterval(() => {
    }
 }, 1000);
 
+// вызов рекламы 3 сек
 if (!isSuccess) {
-   startAd();
+   // startAd();
+   showScreen("pay");
 }
