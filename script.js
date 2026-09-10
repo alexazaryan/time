@@ -62,10 +62,12 @@ const COUNTRY_PRICE = {
 const countrySelect = document.getElementById("country-select");
 const payLink = document.getElementById("pay-link");
 const payNotice = document.getElementById("pay-notice");
+let selectedCountry = "";
 
 if (countrySelect) {
    countrySelect.addEventListener("change", () => {
       const value = countrySelect.value;
+      selectedCountry = value;
       const price = COUNTRY_PRICE[value] || "$1";
 
       payLink.removeAttribute("target");
@@ -84,6 +86,16 @@ if (countrySelect) {
          payLink.textContent = "Оплатить " + price;
          payNotice.textContent = "Пока недоступно для этой страны";
          payNotice.style.display = "block";
+      }
+   });
+}
+
+if (payLink) {
+   payLink.addEventListener("click", () => {
+      if (selectedCountry === "RU" || selectedCountry === "UA") {
+         try {
+            localStorage.setItem("mtn_paid_intent", "1");
+         } catch (e) {}
       }
    });
 }
@@ -260,8 +272,12 @@ function startMatrix() {
 
 // Фиксируем флаг ДО очистки URL
 const isSuccess = window.location.search.includes("success");
+let hasPaidIntent = false;
+try {
+   hasPaidIntent = localStorage.getItem("mtn_paid_intent") === "1";
+} catch (e) {}
 
-if (isSuccess) {
+if (isSuccess && hasPaidIntent) {
    showScreen("result");
    buildClock();
    updateClock();
@@ -275,6 +291,8 @@ setInterval(() => {
    }
 }, 1000);
 
-if (!isSuccess) {
+if (isSuccess && !hasPaidIntent) {
+   showScreen("pay");
+} else if (!isSuccess) {
    startAd();
 }
