@@ -32,24 +32,60 @@ body {
 .screen.active {
    display: block;
 }
+.ad-label {
+   font-size: 13px;
+   color: #847e73;
+   margin-bottom: 10px;
+   text-align: center;
+}
 .ad-box {
+   position: relative;
    background: #fbfaf9;
    border: 1px solid #ddd9d3;
    border-radius: 16px;
-   padding: 60px 24px;
+   overflow: hidden;
    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
 }
-.ad-placeholder {
-   font-size: 15px;
-   color: #847e73;
-   margin-bottom: 28px;
-   line-height: 1.5;
+.ad-link {
+   display: block;
+   line-height: 0;
+}
+.ad-image {
+   width: 100%;
+   height: auto;
+   display: block;
 }
 .ad-count {
-   font-size: 56px;
+   position: absolute;
+   inset: 0;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   font-size: 96px;
    font-weight: bold;
-   color: #555;
+   color: rgba(255, 255, 255, 0.85);
+   text-shadow:
+      0 2px 12px rgba(0, 0, 0, 0.8),
+      0 0 24px rgba(0, 0, 0, 0.6);
    font-variant-numeric: tabular-nums;
+   pointer-events: none;
+}
+.ad-count.pulse {
+   animation: adPulse 1s ease-out;
+}
+@keyframes adPulse {
+   0% {
+      transform: scale(1.6);
+      opacity: 0;
+   }
+   30% {
+      transform: scale(1);
+      opacity: 1;
+   }
+   100% {
+      transform: scale(1);
+      opacity: 1;
+   }
 }
 .pay-card {
    background: #fbfaf9;
@@ -86,6 +122,59 @@ body {
 }
 .pay-btn:active {
    transform: scale(0.98);
+}
+.country-label {
+   display: block;
+   font-size: 13px;
+   color: #847e73;
+   margin-bottom: 8px;
+   text-align: left;
+}
+.country-select {
+   width: 100%;
+   padding: 14px 12px;
+   border-radius: 10px;
+   border: 1px solid #ddd9d3;
+   background: #fff;
+   font-size: 16px;
+   color: #222;
+   margin-bottom: 14px;
+   appearance: none;
+   -webkit-appearance: none;
+   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23847e73' stroke-width='2'><polyline points='6 9 12 15 18 9'/></svg>");
+   background-repeat: no-repeat;
+   background-position: right 12px center;
+}
+#pay-notice {
+   font-size: 14px;
+   color: #a0700a;
+   background: #fdf3e0;
+   border: 1px solid #f0d9a8;
+   border-radius: 10px;
+   padding: 12px;
+   margin-bottom: 14px;
+}
+.crypto-support-btn {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   gap: 8px;
+   width: 100%;
+   box-sizing: border-box;
+   margin-top: 14px;
+   padding: 12px;
+   text-align: center;
+   font-size: 14px;
+   font-weight: 600;
+   color: #c98a2c;
+   border: 1.5px solid #e8a400;
+   border-radius: 10px;
+   text-decoration: none;
+}
+.crypto-icon {
+   width: 20px;
+   height: 20px;
+   flex-shrink: 0;
 }
 .processing {
    display: none;

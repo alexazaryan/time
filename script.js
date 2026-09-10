@@ -13,7 +13,16 @@ function showScreen(name) {
 function startAd() {
    let count = 3;
    const countEl = document.getElementById("ad-count");
+
+   function pulse() {
+      countEl.classList.remove("pulse");
+      void countEl.offsetWidth;
+      countEl.classList.add("pulse");
+   }
+
    countEl.textContent = count;
+   pulse();
+
    const timer = setInterval(() => {
       count--;
       if (count <= 0) {
@@ -21,8 +30,72 @@ function startAd() {
          showScreen("pay");
       } else {
          countEl.textContent = count;
+         pulse();
       }
    }, 1000);
+}
+
+// ===== Выбор способа оплаты по стране =====
+
+const LINK_LAVA =
+   "https://app.lava.top/products/466bc0bd-9f58-45b7-8d76-e0318e279566";
+const LINK_MONOBANK = "https://send.monobank.ua/jar/8qiScDMmpB";
+
+// Примерный эквивалент $1 в местной валюте (округлено в большую сторону)
+const COUNTRY_PRICE = {
+   AZ: "2 AZN",
+   AM: "400 AMD",
+   BY: "4 BYN",
+   DE: "1 €",
+   GE: "3 GEL",
+   KZ: "500 KZT",
+   MD: "18 MDL",
+   PL: "4 PLN",
+   RU: "85 ₽",
+   US: "$1",
+   TR: "35 TRY",
+   UZ: "12700 UZS",
+   UA: "45 грн",
+   OTHER: "$1",
+};
+
+const countrySelect = document.getElementById("country-select");
+const payLink = document.getElementById("pay-link");
+const payNotice = document.getElementById("pay-notice");
+
+if (countrySelect) {
+   countrySelect.addEventListener("change", () => {
+      const value = countrySelect.value;
+      const price = COUNTRY_PRICE[value] || "$1";
+
+      payLink.removeAttribute("target");
+      payLink.removeAttribute("rel");
+
+      if (value === "RU") {
+         payLink.href = LINK_LAVA;
+         payLink.textContent = "Оплатить " + price;
+         payNotice.style.display = "none";
+      } else if (value === "UA") {
+         payLink.href = LINK_MONOBANK;
+         payLink.textContent = "Оплатить " + price;
+         payNotice.style.display = "none";
+      } else {
+         payLink.href = "#";
+         payLink.textContent = "Оплатить " + price;
+         payNotice.textContent = "Пока недоступно для этой страны";
+         payNotice.style.display = "block";
+      }
+   });
+}
+
+if (payLink) {
+   payLink.addEventListener("click", (e) => {
+      if (!payLink.href || payLink.href.endsWith("#")) {
+         e.preventDefault();
+         payNotice.textContent = "Сначала выберите страну";
+         payNotice.style.display = "block";
+      }
+   });
 }
 
 // ===== Электронные часы (сегментный дисплей) =====
@@ -202,8 +275,6 @@ setInterval(() => {
    }
 }, 1000);
 
-// вызов рекламы 3 сек
 if (!isSuccess) {
-   // startAd();
-   showScreen("pay");
+   startAd();
 }
