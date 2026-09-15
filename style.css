@@ -211,6 +211,7 @@ body {
    position: relative;
    flex: 1;
    display: flex;
+   flex-direction: column;
    align-items: center;
    justify-content: center;
    width: 100%;
@@ -251,6 +252,68 @@ body {
    transition: opacity 0.5s ease;
 }
 
+/* ===== Сообщения ===== */
+
+@keyframes msgIn {
+   from {
+      opacity: 0;
+   }
+   to {
+      opacity: 1;
+   }
+}
+@keyframes msgOut {
+   from {
+      opacity: 1;
+   }
+   to {
+      opacity: 0;
+   }
+}
+.msg-in {
+   animation: msgIn 0.6s ease forwards;
+}
+.msg-out {
+   animation: msgOut 0.4s ease forwards;
+}
+
+#msg-track {
+   position: relative;
+   margin-top: 32px;
+   width: 100%;
+   max-width: 420px;
+   height: 54px;
+   text-align: center;
+}
+
+.msg-bubble {
+   position: absolute;
+   left: 50%;
+   top: 50%;
+   transform: translate(-50%, -50%);
+   width: 100%;
+   background: #000;
+   padding: 8px 14px;
+   border-radius: 6px;
+}
+
+.msg-nick {
+   font-size: 15px;
+   color: #ffcc33;
+   font-weight: 700;
+   margin-bottom: 4px;
+}
+
+.msg-nick.donate {
+   color: #00ff9d;
+}
+
+.msg-text {
+   font-size: 18px;
+   color: #fff;
+   font-weight: 600;
+}
+
 #screen-result .counter-block {
    position: relative;
    z-index: 1;
@@ -270,4 +333,7 @@ body {
    padding: 15px;
    background: #f4f3f1;
    border-top: 1px solid #eee;
+}
+.msg-text.donate {
+   color: #00ff9d;
 }

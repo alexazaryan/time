@@ -41,7 +41,6 @@ const LINK_LAVA =
    "https://app.lava.top/products/466bc0bd-9f58-45b7-8d76-e0318e279566";
 const LINK_MONOBANK = "https://send.monobank.ua/jar/8qiScDMmpB";
 
-// Примерный эквивалент $1 в местной валюте (округлено в большую сторону)
 const COUNTRY_PRICE = {
    AZ: "2 AZN",
    AM: "400 AMD",
@@ -270,6 +269,56 @@ function startMatrix() {
    }, 60);
 }
 
+// ===== Сообщения под часами =====
+// При заходе на страницу — сразу последнее (новое) сообщение, 5 сек
+// Дальше — рандом по всему списку, каждое по NORMAL_MS
+
+const NORMAL_MS = 2000;
+const LATEST_HOLD_MS = 5000;
+
+const msgTrack = document.getElementById("msg-track");
+let msgCurrent = null;
+let msgTimer = null;
+
+function showMessage(sub) {
+   if (msgCurrent) {
+      const old = msgCurrent;
+      old.className = "msg-bubble msg-out";
+      setTimeout(() => {
+         if (old.parentNode) old.remove();
+      }, 400);
+   }
+   const el = document.createElement("div");
+   el.className = "msg-bubble msg-in";
+   el.innerHTML =
+      '<div class="msg-nick' +
+      (sub.donate ? " donate" : "") +
+      '">' +
+      sub.nick +
+      '</div><div class="msg-text' +
+      (sub.donate ? " donate" : "") +
+      '">' +
+      sub.text +
+      "</div>";
+   msgTrack.appendChild(el);
+   msgCurrent = el;
+}
+
+function randomStep() {
+   if (typeof SUBS === "undefined" || !SUBS || SUBS.length === 0) {
+      msgTimer = setTimeout(randomStep, NORMAL_MS);
+      return;
+   }
+   showMessage(SUBS[Math.floor(Math.random() * SUBS.length)]);
+   msgTimer = setTimeout(randomStep, NORMAL_MS);
+}
+
+function startMessages() {
+   if (typeof SUBS === "undefined" || !SUBS || SUBS.length === 0) return;
+   showMessage(SUBS[SUBS.length - 1]);
+   msgTimer = setTimeout(randomStep, LATEST_HOLD_MS);
+}
+
 // Фиксируем флаг ДО очистки URL
 const isSuccess = window.location.search.includes("success");
 let hasPaidIntent = false;
@@ -277,22 +326,41 @@ try {
    hasPaidIntent = localStorage.getItem("mtn_paid_intent") === "1";
 } catch (e) {}
 
-if (isSuccess && hasPaidIntent) {
-   showScreen("result");
-   buildClock();
-   updateClock();
-   startMatrix();
-   window.history.replaceState({}, document.title, window.location.pathname);
+if (typeof SUBS !== "undefined" && SUBS) {
+   document.getElementById("counter").textContent = SUBS.length;
 }
 
+// скрыл рекламу и оплату
+// if (isSuccess && hasPaidIntent) {
+//    showScreen("result");
+//    buildClock();
+//    updateClock();
+//    startMatrix();
+//    window.history.replaceState({}, document.title, window.location.pathname);
+// }
+
+// setInterval(() => {
+//    if (screens.result.classList.contains("active")) {
+//       updateClock();
+//    }
+// }, 1000);
+
+// if (isSuccess && !hasPaidIntent) {
+//    showScreen("pay");
+// } else if (!isSuccess) {
+//    startAd();
+// }
+
+// ВРЕМЕННО: решение начало потом удалить
 setInterval(() => {
    if (screens.result.classList.contains("active")) {
       updateClock();
    }
 }, 1000);
 
-if (isSuccess && !hasPaidIntent) {
-   showScreen("pay");
-} else if (!isSuccess) {
-   startAd();
-}
+showScreen("result");
+buildClock();
+updateClock();
+startMatrix();
+startMessages();
+// ВРЕМЕННО: решение конец потом удалить
