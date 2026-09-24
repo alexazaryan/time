@@ -298,7 +298,7 @@ body {
 }
 
 .msg-nick {
-   font-size: 15px;
+   font-size: 18px;
    color: #ffcc33;
    font-weight: 700;
    margin-bottom: 4px;
@@ -309,7 +309,7 @@ body {
 }
 
 .msg-text {
-   font-size: 18px;
+   font-size: 21px;
    color: #fff;
    font-weight: 600;
 }

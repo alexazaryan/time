@@ -291,11 +291,9 @@ function showMessage(sub) {
    const el = document.createElement("div");
    el.className = "msg-bubble msg-in";
    el.innerHTML =
-      '<div class="msg-nick' +
-      (sub.donate ? " donate" : "") +
-      '">' +
-      sub.nick +
-      '</div><div class="msg-text' +
+      // ник скрыт
+      // '<div class="msg-nick' + (sub.donate ? " donate" : "") + '">' + sub.nick + "</div>" +
+      '<div class="msg-text' +
       (sub.donate ? " donate" : "") +
       '">' +
       sub.text +
@@ -326,41 +324,47 @@ try {
    hasPaidIntent = localStorage.getItem("mtn_paid_intent") === "1";
 } catch (e) {}
 
-if (typeof SUBS !== "undefined" && SUBS) {
-   document.getElementById("counter").textContent = SUBS.length;
+// ===== Счётчик людей — меняй число тут =====
+const PEOPLE_COUNT = "1 284";
+document.getElementById("counter").textContent = PEOPLE_COUNT;
+
+// старый счётчик по количеству сообщений
+// if (typeof SUBS !== "undefined" && SUBS) {
+//    document.getElementById("counter").textContent = SUBS.length;
+// }
+
+// ===== Логика экранов: реклама → оплата → часы =====
+if (isSuccess && hasPaidIntent) {
+   showScreen("result");
+   buildClock();
+   updateClock();
+   startMatrix();
+   startMessages();
+   window.history.replaceState({}, document.title, window.location.pathname);
 }
 
-// скрыл рекламу и оплату
-// if (isSuccess && hasPaidIntent) {
-//    showScreen("result");
-//    buildClock();
-//    updateClock();
-//    startMatrix();
-//    window.history.replaceState({}, document.title, window.location.pathname);
-// }
-
-// setInterval(() => {
-//    if (screens.result.classList.contains("active")) {
-//       updateClock();
-//    }
-// }, 1000);
-
-// if (isSuccess && !hasPaidIntent) {
-//    showScreen("pay");
-// } else if (!isSuccess) {
-//    startAd();
-// }
-
-// ВРЕМЕННО: решение начало потом удалить
 setInterval(() => {
    if (screens.result.classList.contains("active")) {
       updateClock();
    }
 }, 1000);
 
-showScreen("result");
-buildClock();
-updateClock();
-startMatrix();
-startMessages();
+if (isSuccess && !hasPaidIntent) {
+   showScreen("pay");
+} else if (!isSuccess) {
+   startAd();
+}
+
+// ВРЕМЕННО: решение начало потом удалить
+// setInterval(() => {
+//    if (screens.result.classList.contains("active")) {
+//       updateClock();
+//    }
+// }, 1000);
+//
+// showScreen("result");
+// buildClock();
+// updateClock();
+// startMatrix();
+// startMessages();
 // ВРЕМЕННО: решение конец потом удалить
