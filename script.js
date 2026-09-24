@@ -334,12 +334,15 @@ document.getElementById("counter").textContent = PEOPLE_COUNT;
 // }
 
 // ===== Логика экранов: реклама → оплата → часы =====
-if (isSuccess && hasPaidIntent) {
+
+// проверка флага отключена — часы открываются всем по ссылке ?success
+// if (isSuccess && hasPaidIntent) {
+if (isSuccess) {
    showScreen("result");
    buildClock();
    updateClock();
    startMatrix();
-   startMessages();
+   // startMessages();
    window.history.replaceState({}, document.title, window.location.pathname);
 }
 
@@ -349,9 +352,12 @@ setInterval(() => {
    }
 }, 1000);
 
-if (isSuccess && !hasPaidIntent) {
-   showScreen("pay");
-} else if (!isSuccess) {
+// if (isSuccess && !hasPaidIntent) {
+//    showScreen("pay");
+// } else if (!isSuccess) {
+//    startAd();
+// }
+if (!isSuccess) {
    startAd();
 }
 
